@@ -8,7 +8,7 @@ import os
 import csv
 import json
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
@@ -101,7 +101,7 @@ def write_json_data(json_path, data, backup=True):
         shutil.copy2(path, backup_path)
     
     # Write atomically with timestamp
-    data['revision'] = datetime.utcnow().isoformat() + 'Z'
+    data['revision'] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
     
     temp_path = path.with_suffix('.json.tmp')
     with open(temp_path, 'w', encoding='utf-8') as f:
@@ -152,7 +152,7 @@ def studio_os_payload():
     
     return jsonify({
         'status': 'ok',
-        'timestamp': datetime.utcnow().isoformat() + 'Z',
+        'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
         'money_registers': {
             'invoices': invoices,
             'proposals': proposals,
@@ -320,7 +320,7 @@ def health():
     """Health check endpoint"""
     return jsonify({
         'status': 'healthy',
-        'timestamp': datetime.utcnow().isoformat() + 'Z',
+        'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
         'paths': {
             'invoices': str(resolve_path(INVOICES_CSV)),
             'proposals': str(resolve_path(PROPOSALS_CSV)),
