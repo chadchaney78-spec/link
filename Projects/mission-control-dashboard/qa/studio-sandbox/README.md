@@ -97,17 +97,45 @@ Works seamlessly in both environments.
 
 ### Company → Social Media
 
-- **Posts spreadsheet** with full CRUD
+**Two view modes:**
+
+1. **Calendar View (Default)**
+   - Month/week board with posts as visual cards on dates
+   - Channel color coding (LinkedIn blue, Twitter light blue, Instagram pink, Facebook blue)
+   - Status dots (idea=gray, draft/review=orange, Chad-ready/approved=purple, posted=green)
+   - Click any post card to open inspector panel
+   
+2. **Spreadsheet View**
+   - Dense table for bulk editing
+   - Full CRUD operations
+   - Quick status updates
+
+**Inspector Panel** (profile-review style):
+- Paste-ready hook and CTA text with copy buttons
+- Channel and identity badges
+- Asset brief and draft file links
+- Quick status progression
+- Edit details button
+- Mobile-responsive slide-in panel
+
+**Features:**
+- **Calendar board view** with posts as visual cards on dates
+- **Inspector/detail panel** (profile-review style) for paste-ready content
+- **Spreadsheet toggle** for dense editing mode
 - **Seeded from posting schedule** (Sep 24–Oct 31)
 - **Draft file links** to markdown drafts
 - **Multi-channel support** (LinkedIn, Twitter/X, Instagram)
 - **Identity tracking** (Chad personal vs LINK brand)
+- **Status workflow** (idea → draft → review → Chad-ready → approved → scheduled → posted)
+- **Copy buttons** for easy paste of hooks and CTAs
+- **Mobile-friendly** inspector panel
 - **Hard constraint: Draft-only, no auto-posting**
 
 ### UI/UX
 
 - **LINK Studio design system** (see `Design/LINK-STUDIO-STYLE.md`)
 - **Dense spreadsheet layout** optimized for quick scanning
+- **Visual calendar board** for social media review
 - **Inline editing** via modal forms
 - **Hover row highlights** for readability
 - **Status color coding** for instant visual parsing

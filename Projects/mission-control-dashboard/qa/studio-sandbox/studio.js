@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initModal();
     loadStudioData();
     initActionButtons();
+    initSocialViewModes();
+    initCalendar();
 });
 
 // Navigation
@@ -228,6 +230,11 @@ function renderSocialPosts(posts) {
             </td>
         </tr>
     `).join('');
+    
+    // Also render calendar if in calendar view
+    if (currentSocialView === 'calendar') {
+        renderCalendar();
+    }
 }
 
 async function savePost(data) {
@@ -283,7 +290,7 @@ function editPost(postId) {
         hook: {label: 'Hook', value: post.hook, type: 'textarea'},
         asset: {label: 'Asset', value: post.asset},
         cta: {label: 'CTA', value: post.cta},
-        status: {label: 'Status', value: post.status, type: 'select', options: ['review', 'approved', 'scheduled', 'posted']},
+        status: {label: 'Status', value: post.status, type: 'select', options: ['idea', 'draft', 'review', 'chad-ready', 'approved', 'scheduled', 'posted']},
         identity: {label: 'Identity', value: post.identity, type: 'select', options: ['chad', 'link']},
         draft_file: {label: 'Draft File Link', value: post.draft_file}
     }, (formData) => savePost(formData));
@@ -445,7 +452,7 @@ function initActionButtons() {
             hook: {label: 'Hook', value: '', type: 'textarea'},
             asset: {label: 'Asset', value: ''},
             cta: {label: 'CTA', value: ''},
-            status: {label: 'Status', value: 'review', type: 'select', options: ['review', 'approved', 'scheduled', 'posted']},
+            status: {label: 'Status', value: 'idea', type: 'select', options: ['idea', 'draft', 'review', 'chad-ready', 'approved', 'scheduled', 'posted']},
             identity: {label: 'Identity', value: 'chad', type: 'select', options: ['chad', 'link']},
             draft_file: {label: 'Draft File Link', value: ''}
         }, async (formData) => {
@@ -481,8 +488,349 @@ function showError(message) {
     alert(message);
 }
 
+// Social Media View Modes
+let currentSocialView = 'calendar';
+let currentMonth = new Date();
+let selectedPost = null;
+
+function initSocialViewModes() {
+    const calendarBtn = document.getElementById('btn-calendar-mode');
+    const spreadsheetBtn = document.getElementById('btn-spreadsheet-mode');
+    
+    calendarBtn.addEventListener('click', () => switchSocialView('calendar'));
+    spreadsheetBtn.addEventListener('click', () => switchSocialView('spreadsheet'));
+}
+
+function switchSocialView(mode) {
+    currentSocialView = mode;
+    
+    // Update buttons
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+    
+    // Update views
+    document.getElementById('social-calendar-view').classList.toggle('active', mode === 'calendar');
+    document.getElementById('social-spreadsheet-view').classList.toggle('active', mode === 'spreadsheet');
+    
+    if (mode === 'calendar' && studioData) {
+        renderCalendar();
+    }
+}
+
+// Calendar Functions
+function initCalendar() {
+    document.getElementById('btn-prev-month').addEventListener('click', () => {
+        currentMonth.setMonth(currentMonth.getMonth() - 1);
+        renderCalendar();
+    });
+    
+    document.getElementById('btn-next-month').addEventListener('click', () => {
+        currentMonth.setMonth(currentMonth.getMonth() + 1);
+        renderCalendar();
+    });
+    
+    document.getElementById('btn-today').addEventListener('click', () => {
+        currentMonth = new Date();
+        renderCalendar();
+    });
+    
+    document.getElementById('inspector-close').addEventListener('click', closeInspector);
+}
+
+function renderCalendar() {
+    if (!studioData) return;
+    
+    const posts = studioData.social_media.posts || [];
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
+    
+    // Update title
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    document.getElementById('calendar-month-title').textContent = `${monthNames[month]} ${year}`;
+    
+    // Build calendar grid
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startingDayOfWeek = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
+    
+    const grid = document.getElementById('calendar-grid');
+    grid.innerHTML = '';
+    
+    // Day headers
+    const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        grid.appendChild(header);
+    });
+    
+    // Previous month padding
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+        const dayEl = createDayCell(prevMonthLastDay - i, year, month - 1, posts, true);
+        grid.appendChild(dayEl);
+    }
+    
+    // Current month days
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayEl = createDayCell(day, year, month, posts, false);
+        grid.appendChild(dayEl);
+    }
+    
+    // Next month padding
+    const totalCells = grid.children.length - 7; // Subtract day headers
+    const remainingCells = 42 - totalCells; // 6 weeks * 7 days
+    for (let day = 1; day <= remainingCells; day++) {
+        const dayEl = createDayCell(day, year, month + 1, posts, true);
+        grid.appendChild(dayEl);
+    }
+}
+
+function createDayCell(day, year, month, posts, isOtherMonth) {
+    const dayEl = document.createElement('div');
+    dayEl.className = 'calendar-day';
+    
+    if (isOtherMonth) {
+        dayEl.classList.add('other-month');
+    }
+    
+    // Check if today
+    const today = new Date();
+    const cellDate = new Date(year, month, day);
+    if (cellDate.toDateString() === today.toDateString()) {
+        dayEl.classList.add('today');
+    }
+    
+    // Day number
+    const dayNumber = document.createElement('div');
+    dayNumber.className = 'day-number';
+    dayNumber.textContent = day;
+    dayEl.appendChild(dayNumber);
+    
+    // Posts for this day
+    const dayPosts = document.createElement('div');
+    dayPosts.className = 'day-posts';
+    
+    const dateStr = cellDate.toISOString().split('T')[0];
+    const postsForDay = posts.filter(p => p.date === dateStr);
+    
+    postsForDay.forEach(post => {
+        const chip = createPostChip(post);
+        dayPosts.appendChild(chip);
+    });
+    
+    dayEl.appendChild(dayPosts);
+    return dayEl;
+}
+
+function createPostChip(post) {
+    const chip = document.createElement('div');
+    chip.className = 'post-chip';
+    chip.dataset.channel = post.channel;
+    chip.dataset.postId = post.id;
+    
+    if (selectedPost && selectedPost.id === post.id) {
+        chip.classList.add('selected');
+    }
+    
+    // Status dot
+    const statusDot = document.createElement('span');
+    statusDot.className = `status-dot ${post.status}`;
+    chip.appendChild(statusDot);
+    
+    // Channel icon
+    const channelIcons = {
+        linkedin: '💼',
+        twitter: '🐦',
+        instagram: '📸',
+        facebook: '👥'
+    };
+    const icon = document.createElement('span');
+    icon.className = 'post-chip-icon';
+    icon.textContent = channelIcons[post.channel] || '📱';
+    chip.appendChild(icon);
+    
+    // Text
+    const text = document.createElement('span');
+    text.className = 'post-chip-text';
+    text.textContent = post.type || 'Post';
+    chip.appendChild(text);
+    
+    // Click handler
+    chip.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showInspector(post);
+    });
+    
+    return chip;
+}
+
+// Inspector Panel
+function showInspector(post) {
+    selectedPost = post;
+    
+    const panel = document.getElementById('inspector-panel');
+    const content = document.getElementById('inspector-content');
+    
+    // Build inspector content
+    content.innerHTML = `
+        <div class="inspector-meta">
+            <span class="inspector-chip channel">
+                ${getChannelIcon(post.channel)} ${post.channel}
+            </span>
+            <span class="inspector-chip identity">
+                ${post.identity === 'chad' ? '👤' : '🔗'} ${post.identity}
+            </span>
+            <span class="status-badge status-${post.status}">${post.status}</span>
+        </div>
+        
+        <div class="inspector-section">
+            <div class="inspector-label">Date</div>
+            <div class="inspector-value">${formatDate(post.date)}</div>
+        </div>
+        
+        <div class="inspector-section">
+            <div class="inspector-label">Hook / Headline</div>
+            <div class="inspector-value large" id="copy-hook">${post.hook}</div>
+            <button class="copy-button" onclick="copyToClipboard('copy-hook', this)">
+                📋 Copy Hook
+            </button>
+        </div>
+        
+        ${post.cta ? `
+        <div class="inspector-section">
+            <div class="inspector-label">Call to Action</div>
+            <div class="inspector-value" id="copy-cta">${post.cta}</div>
+            <button class="copy-button" onclick="copyToClipboard('copy-cta', this)">
+                📋 Copy CTA
+            </button>
+        </div>
+        ` : ''}
+        
+        ${post.asset ? `
+        <div class="inspector-section">
+            <div class="inspector-label">Asset Brief</div>
+            <div class="inspector-value"><code>${post.asset}</code></div>
+        </div>
+        ` : ''}
+        
+        ${post.draft_file ? `
+        <div class="inspector-section">
+            <div class="inspector-label">Draft File</div>
+            <div class="inspector-value">
+                <code style="font-size: 11px; word-break: break-all;">${post.draft_file}</code>
+            </div>
+        </div>
+        ` : ''}
+        
+        <div class="inspector-section">
+            <div class="inspector-label">Post Type</div>
+            <div class="inspector-value">${post.type}</div>
+        </div>
+        
+        <div class="inspector-actions">
+            <button class="btn-edit" onclick="editPost('${post.id}')">Edit Details</button>
+            <button class="btn-secondary" onclick="updatePostStatus('${post.id}')">Update Status</button>
+        </div>
+    `;
+    
+    // Mark as open for mobile
+    panel.classList.add('open');
+    
+    // Update selected chip in calendar
+    document.querySelectorAll('.post-chip').forEach(chip => {
+        chip.classList.toggle('selected', chip.dataset.postId === post.id);
+    });
+}
+
+function closeInspector() {
+    selectedPost = null;
+    document.getElementById('inspector-panel').classList.remove('open');
+    document.getElementById('inspector-content').innerHTML = '<p class="inspector-empty">Select a post to review</p>';
+    
+    // Remove selection highlight
+    document.querySelectorAll('.post-chip').forEach(chip => {
+        chip.classList.remove('selected');
+    });
+}
+
+function getChannelIcon(channel) {
+    const icons = {
+        linkedin: '💼',
+        twitter: '🐦',
+        instagram: '📸',
+        facebook: '👥'
+    };
+    return icons[channel] || '📱';
+}
+
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+}
+
+function copyToClipboard(elementId, button) {
+    const element = document.getElementById(elementId);
+    const text = element.textContent;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.textContent;
+        button.textContent = '✓ Copied!';
+        button.classList.add('copied');
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('copied');
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy to clipboard');
+    });
+}
+
+async function updatePostStatus(postId) {
+    const post = studioData.social_media.posts.find(p => p.id === postId);
+    if (!post) return;
+    
+    const statuses = ['idea', 'draft', 'review', 'chad-ready', 'approved', 'scheduled', 'posted'];
+    const currentIndex = statuses.indexOf(post.status);
+    const nextStatus = statuses[(currentIndex + 1) % statuses.length];
+    
+    const updated = {...post, status: nextStatus};
+    
+    try {
+        const response = await fetch(`${API_BASE}/api/social/posts`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(updated)
+        });
+        
+        if (!response.ok) throw new Error('Failed to update status');
+        
+        await loadStudioData();
+        renderCalendar();
+        showInspector(updated);
+        showSuccess(`Status updated to: ${nextStatus}`);
+        
+    } catch (error) {
+        console.error('Error updating status:', error);
+        showError('Failed to update status');
+    }
+}
+
 // Make functions globally available for inline onclick handlers
 window.editInvoice = editInvoice;
 window.editProposal = editProposal;
 window.editPost = editPost;
 window.deletePost = deletePost;
+window.copyToClipboard = copyToClipboard;
+window.updatePostStatus = updatePostStatus;

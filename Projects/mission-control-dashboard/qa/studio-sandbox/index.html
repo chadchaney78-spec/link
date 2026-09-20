@@ -134,6 +134,14 @@
                 <header class="view-header">
                     <h2>Company → Social Media</h2>
                     <div class="view-actions">
+                        <div class="view-mode-toggle">
+                            <button class="toggle-btn active" data-mode="calendar" id="btn-calendar-mode">
+                                <span class="toggle-icon">📅</span> Calendar
+                            </button>
+                            <button class="toggle-btn" data-mode="spreadsheet" id="btn-spreadsheet-mode">
+                                <span class="toggle-icon">📊</span> Spreadsheet
+                            </button>
+                        </div>
                         <button class="btn-action" id="btn-new-post">+ Post</button>
                     </div>
                 </header>
@@ -143,35 +151,64 @@
                     Chad reviews and manually publishes all content.
                 </div>
                 
-                <div class="money-section">
-                    <div class="section-header">
-                        <h3>Scheduled Posts</h3>
-                        <div class="section-meta">
-                            <span class="meta-badge" id="post-count">0</span>
+                <!-- Calendar View -->
+                <div id="social-calendar-view" class="social-view-mode active">
+                    <div class="calendar-controls">
+                        <button class="calendar-nav-btn" id="btn-prev-month">←</button>
+                        <h3 id="calendar-month-title">September 2026</h3>
+                        <button class="calendar-nav-btn" id="btn-next-month">→</button>
+                        <button class="btn-secondary" id="btn-today">Today</button>
+                    </div>
+                    
+                    <div class="calendar-layout">
+                        <div class="calendar-grid" id="calendar-grid">
+                            <!-- Calendar will be rendered here -->
+                        </div>
+                        
+                        <div class="inspector-panel" id="inspector-panel">
+                            <div class="inspector-header">
+                                <h4>Post Details</h4>
+                                <button class="inspector-close" id="inspector-close">×</button>
+                            </div>
+                            <div class="inspector-content" id="inspector-content">
+                                <p class="inspector-empty">Select a post to review</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="spreadsheet-container">
-                        <table class="spreadsheet" id="posts-table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Channel</th>
-                                    <th>Type</th>
-                                    <th class="col-notes">Hook</th>
-                                    <th>Asset</th>
-                                    <th>CTA</th>
-                                    <th>Status</th>
-                                    <th>Identity</th>
-                                    <th class="col-notes">Draft Link</th>
-                                    <th class="col-actions"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="posts-tbody">
-                                <tr class="loading-row">
-                                    <td colspan="10">Loading posts...</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                </div>
+                
+                <!-- Spreadsheet View -->
+                <div id="social-spreadsheet-view" class="social-view-mode">
+                    <div class="money-section">
+                        <div class="section-header">
+                            <h3>Scheduled Posts</h3>
+                            <div class="section-meta">
+                                <span class="meta-badge" id="post-count">0</span>
+                            </div>
+                        </div>
+                        <div class="spreadsheet-container">
+                            <table class="spreadsheet" id="posts-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Channel</th>
+                                        <th>Type</th>
+                                        <th class="col-notes">Hook</th>
+                                        <th>Asset</th>
+                                        <th>CTA</th>
+                                        <th>Status</th>
+                                        <th>Identity</th>
+                                        <th class="col-notes">Draft Link</th>
+                                        <th class="col-actions"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="posts-tbody">
+                                    <tr class="loading-row">
+                                        <td colspan="10">Loading posts...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
