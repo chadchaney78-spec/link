@@ -1,0 +1,6 @@
+proposal_id,job_ticket,lead_slug,client_name,amount,status,date_created,date_sent,date_accepted,scope_summary
+PROP-2026-RCC-001,TICKET-RCC-001,rcc-studios,RCC Studios,30000.00,accepted,2026-08-15,2026-08-16,2026-08-20,Complete brand identity refresh with guidelines
+PROP-2026-DXL-001,TICKET-DXL-001,dxl-media,DXL Media,18500.00,accepted,2026-08-28,2026-08-30,2026-09-05,Website redesign and development - 3 phases
+PROP-2026-VNX-001,,vnx-creative,VNX Creative,25000.00,sent,2026-09-01,2026-09-02,,Q4 marketing campaign strategy and execution
+PROP-2026-TRX-001,TICKET-TRX-001,trax-logistics,Trax Logistics,3500.00,accepted,2026-08-20,2026-08-22,2026-08-25,Logo design and basic brand kit
+PROP-2026-MXP-001,,mxp-ventures,MXP Ventures,45000.00,draft,2026-09-18,,,Full digital transformation - discovery phase

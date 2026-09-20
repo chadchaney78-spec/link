@@ -1,0 +1,77 @@
+{
+  "revision": "2026-09-20T16:06:00Z",
+  "posts": [
+    {
+      "id": "post-001",
+      "date": "2026-09-23",
+      "channel": "linkedin",
+      "type": "thought-leadership",
+      "hook": "Why design systems fail (and how to fix them)",
+      "asset": "system-comparison.png",
+      "cta": "What's your experience with design systems? Drop a comment.",
+      "status": "review",
+      "identity": "chad",
+      "draft_file": "Company/Marketing/social/2026-09-19-post-drafts-REVIEW.md#post-1"
+    },
+    {
+      "id": "post-002",
+      "date": "2026-09-25",
+      "channel": "twitter",
+      "type": "quick-tip",
+      "hook": "Brand consistency isn't boring—it's your superpower.",
+      "asset": "consistency-diagram.png",
+      "cta": "Follow for more design insights",
+      "status": "review",
+      "identity": "link",
+      "draft_file": "Company/Marketing/social/2026-09-19-post-drafts-REVIEW.md#post-2"
+    },
+    {
+      "id": "post-003",
+      "date": "2026-09-27",
+      "channel": "instagram",
+      "type": "showcase",
+      "hook": "From scattered to sharp: RCC Studios rebrand",
+      "asset": "rcc-before-after-carousel/",
+      "cta": "Link in bio for case study",
+      "status": "review",
+      "identity": "link",
+      "draft_file": "Company/Marketing/social/2026-09-19-post-drafts-REVIEW.md#post-3"
+    },
+    {
+      "id": "post-004",
+      "date": "2026-10-01",
+      "channel": "linkedin",
+      "type": "case-study",
+      "hook": "The best website projects start with these 3 questions",
+      "asset": "dxl-screenshot.png",
+      "cta": "Read the full case study [link]",
+      "status": "review",
+      "identity": "chad",
+      "draft_file": "Company/Marketing/social/2026-09-19-post-drafts-REVIEW.md#post-4"
+    },
+    {
+      "id": "post-005",
+      "date": "2026-10-03",
+      "channel": "twitter",
+      "type": "hot-take",
+      "hook": "Hot take: Minimalism died in 2024, but clarity never will.",
+      "asset": "",
+      "cta": "RT if you agree",
+      "status": "review",
+      "identity": "link",
+      "draft_file": "Company/Marketing/social/2026-09-19-post-drafts-REVIEW.md#post-5"
+    },
+    {
+      "id": "post-006",
+      "date": "2026-10-05",
+      "channel": "instagram",
+      "type": "bts",
+      "hook": "Saturday studio vibes",
+      "asset": "studio-candid.jpg",
+      "cta": "Follow for more BTS",
+      "status": "review",
+      "identity": "link",
+      "draft_file": "Company/Marketing/social/2026-09-19-post-drafts-REVIEW.md#post-6"
+    }
+  ]
+}

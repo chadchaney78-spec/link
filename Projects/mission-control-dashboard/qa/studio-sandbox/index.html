@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control — LINK Studio</title>
+    <link rel="stylesheet" href="studio.css">
+</head>
+<body>
+    <div class="studio-layout">
+        <!-- Navigation Sidebar -->
+        <nav class="studio-nav">
+            <div class="studio-logo">
+                <h1>LINK</h1>
+                <span class="studio-subtitle">Mission Control</span>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-item" data-view="today">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Today</span>
+                </div>
+                <div class="nav-item" data-view="profiles">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-label">Profiles</span>
+                </div>
+                <div class="nav-item" data-view="calendar">
+                    <span class="nav-icon">🗓️</span>
+                    <span class="nav-label">Calendar</span>
+                </div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Company</div>
+                <div class="nav-item active" data-view="company-money">
+                    <span class="nav-icon">💰</span>
+                    <span class="nav-label">Money</span>
+                </div>
+                <div class="nav-item" data-view="company-social">
+                    <span class="nav-icon">📱</span>
+                    <span class="nav-label">Social Media</span>
+                </div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-item" data-view="system">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">System</span>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content Area -->
+        <main class="studio-main">
+            <!-- Money View -->
+            <section id="view-company-money" class="view-content active">
+                <header class="view-header">
+                    <h2>Company → Money</h2>
+                    <div class="view-actions">
+                        <button class="btn-action" id="btn-new-invoice">+ Invoice</button>
+                        <button class="btn-action" id="btn-new-proposal">+ Proposal</button>
+                    </div>
+                </header>
+                
+                <div class="money-section">
+                    <div class="section-header">
+                        <h3>Invoices</h3>
+                        <div class="section-meta">
+                            <span class="meta-badge" id="invoice-count">0</span>
+                        </div>
+                    </div>
+                    <div class="spreadsheet-container">
+                        <table class="spreadsheet" id="invoices-table">
+                            <thead>
+                                <tr>
+                                    <th>Invoice ID</th>
+                                    <th>Proposal</th>
+                                    <th>Ticket</th>
+                                    <th>Client</th>
+                                    <th class="col-number">Amount</th>
+                                    <th>Status</th>
+                                    <th>Issued</th>
+                                    <th>Due</th>
+                                    <th>Paid</th>
+                                    <th class="col-notes">Notes</th>
+                                    <th class="col-actions"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoices-tbody">
+                                <tr class="loading-row">
+                                    <td colspan="11">Loading invoices...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="money-section">
+                    <div class="section-header">
+                        <h3>Proposals</h3>
+                        <div class="section-meta">
+                            <span class="meta-badge" id="proposal-count">0</span>
+                        </div>
+                    </div>
+                    <div class="spreadsheet-container">
+                        <table class="spreadsheet" id="proposals-table">
+                            <thead>
+                                <tr>
+                                    <th>Proposal ID</th>
+                                    <th>Ticket</th>
+                                    <th>Lead</th>
+                                    <th>Client Name</th>
+                                    <th class="col-number">Amount</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Sent</th>
+                                    <th>Accepted</th>
+                                    <th class="col-notes">Scope</th>
+                                    <th class="col-actions"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="proposals-tbody">
+                                <tr class="loading-row">
+                                    <td colspan="11">Loading proposals...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Social Media View -->
+            <section id="view-company-social" class="view-content">
+                <header class="view-header">
+                    <h2>Company → Social Media</h2>
+                    <div class="view-actions">
+                        <button class="btn-action" id="btn-new-post">+ Post</button>
+                    </div>
+                </header>
+                
+                <div class="alert alert-info">
+                    <strong>⚠️ Draft Mode:</strong> All posts are draft-only. No auto-posting. 
+                    Chad reviews and manually publishes all content.
+                </div>
+                
+                <div class="money-section">
+                    <div class="section-header">
+                        <h3>Scheduled Posts</h3>
+                        <div class="section-meta">
+                            <span class="meta-badge" id="post-count">0</span>
+                        </div>
+                    </div>
+                    <div class="spreadsheet-container">
+                        <table class="spreadsheet" id="posts-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Channel</th>
+                                    <th>Type</th>
+                                    <th class="col-notes">Hook</th>
+                                    <th>Asset</th>
+                                    <th>CTA</th>
+                                    <th>Status</th>
+                                    <th>Identity</th>
+                                    <th class="col-notes">Draft Link</th>
+                                    <th class="col-actions"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="posts-tbody">
+                                <tr class="loading-row">
+                                    <td colspan="10">Loading posts...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Placeholder views -->
+            <section id="view-today" class="view-content">
+                <header class="view-header">
+                    <h2>Today</h2>
+                </header>
+                <p class="placeholder-text">Today view - coming soon</p>
+            </section>
+            
+            <section id="view-profiles" class="view-content">
+                <header class="view-header">
+                    <h2>Profiles</h2>
+                </header>
+                <p class="placeholder-text">Profiles view - coming soon</p>
+            </section>
+            
+            <section id="view-calendar" class="view-content">
+                <header class="view-header">
+                    <h2>Calendar</h2>
+                </header>
+                <p class="placeholder-text">Calendar view - coming soon</p>
+            </section>
+            
+            <section id="view-system" class="view-content">
+                <header class="view-header">
+                    <h2>System</h2>
+                </header>
+                <p class="placeholder-text">System view - coming soon</p>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Modal for editing -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Edit Item</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Dynamic form fields inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn-primary" id="modal-save">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="studio.js"></script>
+</body>
+</html>

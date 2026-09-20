@@ -1,0 +1,6 @@
+invoice_id,proposal_id,job_ticket,client_slug,amount,status,date_issued,date_due,date_paid,notes
+INV-2026-001,PROP-2026-RCC-001,TICKET-RCC-001,rcc-studios,15000.00,paid,2026-09-01,2026-09-15,2026-09-14,Brand refresh project - milestone 1
+INV-2026-002,PROP-2026-RCC-001,TICKET-RCC-001,rcc-studios,15000.00,paid,2026-09-15,2026-09-30,2026-09-28,Brand refresh project - milestone 2
+INV-2026-003,PROP-2026-DXL-001,TICKET-DXL-001,dxl-media,8500.00,sent,2026-09-10,2026-09-24,,Website redesign - Phase 1
+INV-2026-004,,TICKET-TRX-001,trax-logistics,3200.00,draft,2026-09-18,2026-10-02,,Logo design - final invoice
+INV-2026-005,PROP-2026-VNX-001,,vnx-creative,12000.00,sent,2026-09-12,2026-09-26,,Marketing campaign Q4 - initial payment

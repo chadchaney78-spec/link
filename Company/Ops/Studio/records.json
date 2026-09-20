@@ -1,0 +1,25 @@
+{
+  "revision": "2026-09-20T16:06:00Z",
+  "events": [],
+  "notes": [
+    {
+      "id": "note-001",
+      "timestamp": "2026-09-20T10:00:00Z",
+      "author": "chad",
+      "content": "Money section needs spreadsheet view. Current card layout not working for quick scans."
+    },
+    {
+      "id": "note-002",
+      "timestamp": "2026-09-20T14:30:00Z",
+      "author": "chad",
+      "content": "Social media posting schedule needs to live in Mission Control. Draft-only, no auto-post."
+    }
+  ],
+  "channels": [
+    {
+      "name": "studio-ops",
+      "type": "internal",
+      "active": true
+    }
+  ]
+}
